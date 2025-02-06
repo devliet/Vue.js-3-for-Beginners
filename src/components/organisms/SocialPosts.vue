@@ -1,54 +1,78 @@
 <template>
-  <SocialPost
-    v-for="(post, index) in posts"
-    :username="post.username"
+  <!-- substituting retweets -->
+  <!-- vue 3 v-for across async fetch data -->
+  <p>
+    Social posts below
+  </p>
+  <div v-if="fields1.posts && fields2">
+    <p>
+      let's go
+    </p>
+    <!-- <SocialPost v-for="(post) in fields1.posts" :username="p" :userId="post.userId" :avatarSrc="p" :post="post.body"
+      :comments="p" :likes="post.reactions.likes" :retweets="post.reactions.dislikes" :key="post.userId"
+      @delete="onDelete(index)"></SocialPost> -->
+      <SocialPost
+    v-for="(post, index) in fields1.posts"
+    :username="fields2[index].login.uuid"
     :userId="post.userId"
-    :avatarSrc="post.avatar"
-    :post="post.post"
-    :comments="post.comments"
-    :likes="post.likes"
-    :retweets="post.retweets"
+    :avatarSrc="fields2[index].picture.medium"
+    :post="post.body"
+    :comments="fields3[index].body"
+    :likes="post.reactions.likes"
+    :retweets="post.reactions.dislikes"  
     :key="post.userId"
     @delete="onDelete(index)"
   ></SocialPost>
-</template>
-  
-<script setup>
-  import { reactive } from 'vue';
-  import SocialPost from '../molecules/SocialPost.vue'
 
-  const onDelete = ( postIndex ) => {
-    posts.splice(postIndex, 1);
+  </div>
+</template>
+
+
+
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import SocialPost from '../molecules/SocialPost.vue'
+
+
+const posts = ref([]);
+
+const fields1 = ref([]);
+const fields2 = ref([]);
+const fields3 = ref([]);
+
+
+async function fetchFields() {
+  const [fields1Response, fields2Response, fields3Response] = await Promise.all([
+    fetch('https://dummyjson.com/posts?limit=5&select=userId,body,reactions,views'),
+    fetch('https://randomuser.me/api/?inc=login,picture&results=5'),
+    fetch('https://dummyjson.com/comments?limit=5&select=body'),
+  ])
+
+
+  const fields11 = await fields1Response.json();
+  //  fields1.value = fields11
+  const fields22 = await fields2Response.json();
+  //  fields2.value = fields22
+
+  const fields33 = await fields3Response.json();
+  //  fields3.value = fields33
+
+  return [fields11, fields22, fields33];
+}
+
+onMounted(
+  async () => {
+  await fetchFields().then(([fields11, fields22, fields33]) => {
+    fields1.value = fields11;
+    fields2.value = fields22.results;
+    fields3.value = fields33.comments;
+
+    fields11, fields22, fields33
   }
-  
-  const posts = reactive([
-    { username: "Username one",
-      userId: "usernameId1",
-      avatar: "https://i.pravatar.cc/40",
-      post: "This is my post",
-      comments: [
-        "great post",
-        "amazing post"
-      ],
-      likes: 2,
-      retweets: 1,
-      tags: [
-        "tag 1"
-      ]
-    },
-    { username: "Username two",
-      userId: "usernameId2",
-      avatar: "https://i.pravatar.cc/40",
-      post: "This is my second post",
-      comments: [],
-      likes: 3,
-      retweets: 1,
-      tags: [
-        "tag 1",
-        "tag 2"
-      ]
-    }
-  ]);
-  
-  </script>
-  
+  ).catch(error => {
+  console.log("error promises")
+})
+  }
+)
+</script>

@@ -50,12 +50,12 @@ const fields3 = ref([]);
 const skip = ref(5);
 
 watch(
-  posts,
+  posts.value,
   (newValue, old)=>{
-    console.log(newValue.length)
+    console.log(newValue.length + "xxxx")
     if(newValue.length <4){
       skip.value++;
-      fetchFields(skip.value);
+      fetchFields(skip);
     }
   }
 )
@@ -76,15 +76,7 @@ async function fetchFields(skip) {
   const fields33 = await fields3Response.json();
   //  fields3.value = fields33
 
- 
-
-  return [fields11, fields22, fields33];
-}
-
-onMounted(
-  async () => {
-  await fetchFields(skip).then(([fields11, fields22, fields33]) => {
-    fields1.value = fields11.posts;
+  fields1.value = fields11.posts;
     fields2.value = fields22.results;
     fields3.value = fields33.comments;
 
@@ -104,10 +96,14 @@ onMounted(
      })
      
     }
-  //  fields11, fields22, fields33
-  
+
+ // return [fields11, fields22, fields33];
 }
-  ).catch(error => {
+
+onMounted(
+  async () => {
+  await fetchFields(skip)
+  .catch(error => {
   console.log("error promises")
   console.log(error)
 })

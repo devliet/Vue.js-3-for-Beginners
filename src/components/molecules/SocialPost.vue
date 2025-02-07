@@ -62,9 +62,9 @@ const onDeleted = () =>{
 
 }
 
-// const hasComments = ()=>{
-//   return comments.length==0?false:true
-// }
+const hasComments = ()=>{
+  return comments.length==0?false:true
+}
 
 
 // const commentsNumber = computed( () => {

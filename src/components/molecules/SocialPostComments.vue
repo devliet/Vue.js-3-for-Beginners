@@ -1,8 +1,5 @@
 
   <template>
-    <p>
-     --- {{ comments.length }}***
-    </p>
     <div class="SocialPostComments"  v-if="comments.length!=0">
         <p>Comments:</p>
         <div v-for="{user, body} in comments" class="comment">

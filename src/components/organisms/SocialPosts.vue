@@ -47,24 +47,24 @@ const fields1 = ref([]);
 const fields2 = ref([]);
 const fields3 = ref([]);
 
-const skip = ref(5);
-
+const skip = ref(0);
+let limit = ref(5);
 watch(
   posts.value,
   (newValue, old)=>{
     console.log(newValue.length + "xxxx")
     if(newValue.length <4){
       skip.value++;
-      fetchFields(skip);
+      fetchFields(skip, limit);
     }
   }
 )
 
-async function fetchFields(skip) {
+async function fetchFields(skip, limit) {
   const [fields1Response, fields2Response, fields3Response] = await Promise.all([
-    fetch(`https://dummyjson.com/posts?limit=5&select=userId,body,reactions,views&skip=${skip.value}`),
-    fetch('https://randomuser.me/api/?inc=login,picture&results=5'),
-    fetch(`https://dummyjson.com/comments?limit=5&select=body&skip=${skip.value}`),
+    fetch(`https://dummyjson.com/posts?limit=5&select=userId,body,reactions,views&skip=${skip.value}&limit=${limit.value}`),
+    fetch(`https://dummyjson.com/users?limit=5&select=username,image&skip=${skip.value}&limit=${limit.value}`),
+    fetch(`https://dummyjson.com/comments?limit=5&select=body&skip=${skip.value}&limit=${limit.value}`),
   ])
 
 
@@ -84,9 +84,9 @@ async function fetchFields(skip) {
    for(let index=0;index<5;index++){
      posts.value.push({
       id: fields3.value[index].id,
-      username: fields2.value[index].login.uuid,
+      username: fields2.value[index].username,
       userId: fields1.value[index].userId,
-      avatarSrc: fields2.value[index].picture.medium,
+      avatarSrc: fields2.value[index].image,
       post: fields1.value[index].body,
    //   comments="fields3[index].body,
       likes: fields1.value.likes,
@@ -102,7 +102,7 @@ async function fetchFields(skip) {
 
 onMounted(
   async () => {
-  await fetchFields(skip)
+  await fetchFields(skip, limit)
   .catch(error => {
   console.log("error promises")
   console.log(error)

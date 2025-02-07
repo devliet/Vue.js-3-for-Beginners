@@ -57,6 +57,11 @@ const props = defineProps({
   retweets: Number
 });
 
+const hasComments = ()=>{
+  return comments.length==0?false:true
+}
+
+
 const commentsNumber = computed( () => {
   return props.comments.length;
 });

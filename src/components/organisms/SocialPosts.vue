@@ -11,7 +11,7 @@
     <!-- <SocialPost v-for="(post) in fields1.posts" :username="p" :userId="post.userId" :avatarSrc="p" :post="post.body"
       :comments="p" :likes="post.reactions.likes" :retweets="post.reactions.dislikes" :key="post.userId"
       @delete="onDelete(index)"></SocialPost> -->
-      <SocialPost
+    <SocialPost
     v-for="(post, index) in fields1.posts"
     :username="fields2[index].login.uuid"
     :userId="post.userId"
@@ -20,7 +20,7 @@
     :comments="fields3[index].body"
     :likes="post.reactions.likes"
     :retweets="post.reactions.dislikes"  
-    :key="post.userId"
+    :key="post.id"
     @delete="onDelete(index)"
   ></SocialPost>
 
@@ -68,7 +68,7 @@ onMounted(
     fields2.value = fields22.results;
     fields3.value = fields33.comments;
 
-    fields11, fields22, fields33
+  //  fields11, fields22, fields33
   }
   ).catch(error => {
   console.log("error promises")

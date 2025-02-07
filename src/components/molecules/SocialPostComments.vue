@@ -1,17 +1,38 @@
-<template>
-  <div class="SocialPostComments">
-      <p>Comments:</p>
-      <div v-for="(comment, index) in comments" class="comment">
-        <p>{{ comment }}</p>
-      </div>
-  </div>
-</template>
+
+  <template>
+    <p>
+     --- {{ comments.length }}***
+    </p>
+    <div class="SocialPostComments"  v-if="comments.length!=0">
+        <p>Comments:</p>
+        <div v-for="{user, body} in comments" class="comment">
+          <p>{{user.username }}: <strong> {{ body }}</strong></p>
+        </div>
+    </div>
+    <div v-else>
+      No comments for this post
+    </div>
+  </template>
   
 <script setup >
 import { reactive } from 'vue';
 const props = defineProps({
-  comments: Array
+  comments: Array, postId: Number
 })
+
+const comments = reactive([]);
+
+const fetchComments = (postId) =>{
+  const baseUrl = 'https://dummyjson.com';
+
+  fetch(`${baseUrl}/comments/post/${postId}`)
+  .then(response => response.json())
+  .then( result => {
+    Object.assign(comments, result.comments)
+  })
+}
+
+fetchComments(props.postId);
 </script>
   
 <style lang="scss">

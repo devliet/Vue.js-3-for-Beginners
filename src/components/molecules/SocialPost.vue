@@ -12,7 +12,7 @@
     <div class="post" v-text="post"></div>
     <SocialPostComments
       v-if="showComments" 
-      :comments="comments"
+      :post-id="postId"
       @delete="onDeleted"
     />
     
@@ -48,35 +48,41 @@ const onShowCommentClick = () => {
 
 
 const props = defineProps({
+  postId: Number,
   username: String,
   userId: Number,
   avatarSrc: String,
   post: String,
-  comments: Array,
+ // comments: Array,
   likes: Number,
   retweets: Number
 });
 
-const hasComments = ()=>{
-  return comments.length==0?false:true
+const onDeleted = () =>{
+
 }
 
+// const hasComments = ()=>{
+//   return comments.length==0?false:true
+// }
 
-const commentsNumber = computed( () => {
-  return props.comments.length;
-});
 
-const interactions = computed( ()=> {
-  const comments = props.comments.length;
-  console.log(comments, props.likes, props.retweets);
-  return comments + props.likes + props.retweets;
-});
+// const commentsNumber = computed( () => {
+//   return props.comments.length;
+// });
+
+// const interactions = computed( ()=> {
+//   const comments = props.comments.length;
+//   console.log(comments, props.likes, props.retweets);
+//   return comments + props.likes + props.retweets;
+// });
 
 onMounted( () => {
   console.log(props.username);
 });
 
 const emit = defineEmits(['delete']);
+
 const onDeleteClick = () => {
   emit('delete');
 }

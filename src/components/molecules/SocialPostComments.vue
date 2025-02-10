@@ -19,17 +19,16 @@ const props = defineProps({
 
 const comments = reactive([]);
 
-const fetchComments = (postId) =>{
+const  fetchComments = (postId) =>{
   const baseUrl = 'https://dummyjson.com';
-
-  fetch(`${baseUrl}/comments/post/${postId}`)
+  return fetch(`${baseUrl}/comments/post/${postId}`)
   .then(response => response.json())
   .then( result => {
     Object.assign(comments, result.comments)
   })
 }
 
-fetchComments(props.postId);
+await fetchComments(props.postId);
 </script>
   
 <style lang="scss">

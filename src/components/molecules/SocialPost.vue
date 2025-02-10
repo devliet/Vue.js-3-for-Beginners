@@ -10,11 +10,16 @@
       <IconDelete @click="onDeleteClick" />
     </div>
     <div class="post" v-text="post"></div>
-    <SocialPostComments
-      v-if="showComments" 
-      :post-id="postId"
-      @delete="onDeleted"
-    />
+    <Suspense v-if="showComments" >
+      <SocialPostComments
+        :postId="postId"
+        @delete="onDeleted"
+      />
+      <template #fallback>
+        Fetching comments..............................
+      </template>
+    </Suspense>
+
     
     <div class="interactions">
       <IconHeart />

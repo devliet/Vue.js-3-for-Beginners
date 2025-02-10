@@ -12,20 +12,11 @@
       :comments="p" :likes="post.reactions.likes" :retweets="post.reactions.dislikes" :key="post.userId"
       @delete="onDelete(index)"></SocialPost> -->
 
-        <!-- :comments="fields3[index].body" -->
+    <!-- :comments="fields3[index].body" -->
 
-    <SocialPost
-    v-for="(post, index) in posts"
-    :post-id="post.id"
-    :username="post.username"
-    :userId="post.userId"
-    :avatarSrc="post.avatarSrc"
-    :post="post.post"
-    :likes="post.likes"
-    :retweets="post.retweets"  
-    :key="post.id"
-    @delete="onDelete(index)"
-  ></SocialPost>
+    <SocialPost v-for="(post, index) in posts" :post-id="post.id" :username="post.username" :userId="post.userId"
+      :avatarSrc="post.avatarSrc" :post="post.post" :likes="post.likes" :retweets="post.retweets" :key="post.id"
+      @delete="onDelete(index)"></SocialPost>
 
   </div>
 </template>
@@ -37,9 +28,9 @@
 import { ref, onMounted, watch } from 'vue';
 import SocialPost from '../molecules/SocialPost.vue'
 
-const onDelete = ( postIndex ) => {
-    posts.value.splice(postIndex, 1);
-  }
+const onDelete = (postIndex) => {
+  posts.value.splice(postIndex, 1);
+}
 
 const posts = ref([]);
 
@@ -48,23 +39,43 @@ const fields2 = ref([]);
 const fields3 = ref([]);
 
 const skip = ref(0);
-let limit = ref(5);
+const limit = ref(5);
+const secondRetrieve = ref(true)
+
 watch(
   posts.value,
-  (newValue, old)=>{
+   (newValue, old) => {
     console.log(newValue.length + "xxxx")
-    if(newValue.length <4){
-      skip.value++;
-      fetchFields(skip, limit);
+    if (newValue.length < 4) {
+      if (secondRetrieve.value) {
+        skip.value = 5
+        limit.value = 3
+        secondRetrieve.value = false
+      }
+      else {
+        skip.value += 3
+      }
+
+     
+     fetchFields(skip, limit)
+      .catch(error => {
+        console.log("error promises")
+        console.log(error)
+      })
+
+ 
+
+
+
     }
   }
 )
 
 async function fetchFields(skip, limit) {
   const [fields1Response, fields2Response, fields3Response] = await Promise.all([
-    fetch(`https://dummyjson.com/posts?limit=5&select=userId,body,reactions,views&skip=${skip.value}&limit=${limit.value}`),
-    fetch(`https://dummyjson.com/users?limit=5&select=username,image&skip=${skip.value}&limit=${limit.value}`),
-    fetch(`https://dummyjson.com/comments?limit=5&select=body&skip=${skip.value}&limit=${limit.value}`),
+    fetch(`https://dummyjson.com/posts?select=userId,body,reactions,views&skip=${skip.value}&limit=${limit.value}`),
+    fetch(`https://dummyjson.com/users?select=username,image&skip=${skip.value}&limit=${limit.value}`),
+    fetch(`https://dummyjson.com/comments?skip=${skip.value}&limit=${limit.value}`),
   ])
 
 
@@ -77,36 +88,36 @@ async function fetchFields(skip, limit) {
   //  fields3.value = fields33
 
   fields1.value = fields11.posts;
-    fields2.value = fields22.results;
-    fields3.value = fields33.comments;
+  fields2.value = fields22.users;
+  fields3.value = fields33.comments;
 
-   
-   for(let index=0;index<5;index++){
-     posts.value.push({
-      id: fields3.value[index].id,
+
+  for (let index = 0; index < 5; index++) {
+    posts.value.push({
+       id: fields3.value[index].id,
       username: fields2.value[index].username,
       userId: fields1.value[index].userId,
       avatarSrc: fields2.value[index].image,
       post: fields1.value[index].body,
-   //   comments="fields3[index].body,
+      //   comments="fields3[index].body,
       likes: fields1.value.likes,
       retweets: fields1.value[index].reactions.dislikes,
       tags: fields1.value[index].tags
 
-     })
-     
-    }
+    })
 
- // return [fields11, fields22, fields33];
+  }
+
+  // return [fields11, fields22, fields33];
 }
 
 onMounted(
   async () => {
-  await fetchFields(skip, limit)
-  .catch(error => {
-  console.log("error promises")
-  console.log(error)
-})
+    await fetchFields(skip, limit)
+      .catch(error => {
+        console.log("error promises")
+        console.log(error)
+      })
   }
 )
 </script>

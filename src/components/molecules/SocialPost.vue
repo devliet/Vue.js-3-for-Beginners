@@ -78,7 +78,7 @@ const hasComments = ()=>{
 // });
 
 onMounted( () => {
-  console.log(props.username);
+ // console.log(props.username);
 });
 
 const emit = defineEmits(['delete']);

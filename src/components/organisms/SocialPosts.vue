@@ -45,21 +45,21 @@ const secondRetrieve = ref(true)
 watch(
   posts.value,
    (newValue, old) => {
-    console.log(newValue.length + "xxxx")
+   // console.log(newValue.length + "xxxx")
     if (newValue.length < 4) {
       if (secondRetrieve.value) {
         skip.value = 5
-        limit.value = 3
+        limit.value = 2
         secondRetrieve.value = false
       }
       else {
-        skip.value += 3
+        skip.value += 2
       }
 
      
      fetchFields(skip, limit)
       .catch(error => {
-        console.log("error promises")
+        console.log("error promises from watch")
         console.log(error)
       })
 
@@ -92,7 +92,8 @@ async function fetchFields(skip, limit) {
   fields3.value = fields33.comments;
 
 
-  for (let index = 0; index < 5; index++) {
+  for (let index = 0; index <= limit.value-1; index++) {
+    console.log(index)
     posts.value.push({
        id: fields3.value[index].id,
       username: fields2.value[index].username,

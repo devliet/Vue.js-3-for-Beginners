@@ -27,6 +27,7 @@
         value="Show comment"
         width="auto"
         theme="dark"
+        data-cy="showCommentsButton"
       />
     </div>
   </div>

@@ -23,11 +23,11 @@
       {{ likes }}
       <TheButton
         @click="onShowCommentClick"
-        value="Show comment"
+        
         width="auto"
         theme="dark"
         data-cy="showCommentButton"
-      />
+      >Show comment</TheButton>
     </div>
   </div>
 </template>

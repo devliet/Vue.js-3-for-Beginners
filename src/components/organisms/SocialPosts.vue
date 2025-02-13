@@ -7,6 +7,7 @@
     :post="post.text"
     :likes="post.likes"
     :key="post.id"
+    :userId="post.owner.id"
     @delete="onDelete(index)"
   ></SocialPost>
 </template>

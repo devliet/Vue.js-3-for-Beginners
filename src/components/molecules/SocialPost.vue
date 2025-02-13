@@ -41,7 +41,8 @@ const props = defineProps({
   id: String,
   avatarSrc: String,
   post: String,
-  likes: Number
+  likes: Number,
+  userId: String
 });
 
 const router = useRouter();
@@ -49,12 +50,14 @@ const navigateToUser = () => {
   router.push({
     name: "user",
     params: {
-      userId: props.id
+      userId: props.userId
     }
   });
 }
 onMounted(() => {
   console.log(props.username);
+  console.log(props.userId);
+
 });
 
 const emit = defineEmits(['delete']);

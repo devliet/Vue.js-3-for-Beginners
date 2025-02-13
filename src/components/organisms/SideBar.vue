@@ -11,6 +11,8 @@
                 Current time: {{currentTime}}
             </div>
             <TheButton @click="onUpdateTimeClick">Update Time</TheButton>
+            <a @click="navigateToPrivacy">Programmatic to privacy</a>
+            <router-link to="about">About</router-link>
         </template>
     </aside>
 </template>
@@ -19,6 +21,8 @@ import { ref, onBeforeMount } from 'vue';
 import TheButton  from '../atoms/TheButton.vue'
 import IconLeftArrow from '../icons/IconLeftArrow.vue'
 import IconRightArrow from '../icons/IconRightArrow.vue'
+import { RouterLink, useRouter } from 'vue-router';
+
 const currentTime = ref(new Date().toLocaleTimeString());
 const closed = ref(false);
 const toggleSidebar = () => {
@@ -28,7 +32,13 @@ const toggleSidebar = () => {
 const onUpdateTimeClick = () => {
     currentTime.value = new Date().toLocaleTimeString();
 };
+const router = useRouter();
 
+const navigateToPrivacy = (event) => {
+event.preventDefault();
+console.log("Run a side effect");
+router.push("privacy");
+}
 onBeforeMount( async () => {
     const sidebarState = window.localStorage.getItem("sidebar");
     closed.value = sidebarState === "true";

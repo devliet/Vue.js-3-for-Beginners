@@ -24,10 +24,10 @@
   
   <script setup>
   import { onMounted, ref, computed } from 'vue';
-  import SocialPostComments from './SocialPostComments.vue';
-  import IconHeart from '../icons/IconHeart.vue';
-  import IconDelete from '../icons/IconDelete.vue';
-  import TheButton from '../atoms/TheButton.vue';
+  import SocialPostComments from '../components/molecules/SocialPostComments.vue'
+  import IconHeart from '../components/icons/IconHeart.vue';
+  import IconDelete from '../components/icons/IconDelete.vue';
+  import TheButton from '../components/atoms/TheButton.vue';
   import { useRouter } from 'vue-router';
   
   const showComments = ref(false);

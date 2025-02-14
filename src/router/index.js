@@ -4,8 +4,14 @@ import AboutView from '../views/AboutView.vue'
 // import PrivacyView from '../views/PrivacyView.vue'
 import UserProfileView from '../views/UserProfileView.vue'
 import UserPostsView from '../views/UserPostsView.vue'
-import UserView from '../views/UserView.vue'
+//import UserView from '../views/UserView.vue'
 
+const UserView = {
+  template: `<div class="user">
+    <h2>User {{ $route.params.id }}</h2>
+    <router-view></router-view>
+    `
+}
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

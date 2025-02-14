@@ -4,7 +4,7 @@
         <template v-for="key in valuesToDisplay">
             <label v-if="user[key]">
                 {{ key }}
-                <input type="text" disabled :value="user[key]" />
+                <input type="text" disabled :value="user[key]" /><br/>
             </label>
         </template>
     </section>

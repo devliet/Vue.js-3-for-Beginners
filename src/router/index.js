@@ -4,14 +4,18 @@ import AboutView from '../views/AboutView.vue'
 // import PrivacyView from '../views/PrivacyView.vue'
 import UserProfileView from '../views/UserProfileView.vue'
 import UserPostsView from '../views/UserPostsView.vue'
-//import UserView from '../views/UserView.vue'
+import UserView from '../views/UserView.vue'
 
-const UserView = {
-  template: `<div class="user">
-    <h2>User {{ $route.params.id }}</h2>
-    <router-view></router-view>
-    `
-}
+
+
+
+// Vue.component('user-view', {
+//   template: `<div class="user">
+//   <h2>User {{ $route.params.id }}</h2>
+//   <RouterView/>
+//   `
+// })
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,6 +37,7 @@ const router = createRouter({
       {
         path: "/user/:userId",
         name: "user",
+        component: UserView,
         children:[
           {
             path: "profile",
@@ -44,8 +49,8 @@ const router = createRouter({
             name: "user-posts",
             component: UserPostsView
           }
-        ],
-        component: UserView
+        ]
+        
         }
   ]
 })

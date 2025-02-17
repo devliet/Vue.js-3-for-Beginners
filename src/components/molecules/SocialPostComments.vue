@@ -1,33 +1,37 @@
-
-  <template>
-    <div class="SocialPostComments"  v-if="comments.length!=0">
-        <p>Comments:</p>
-        <div v-for="{user, body} in comments" class="comment">
-          <p>{{user.username }}: <strong> {{ body }}</strong></p>
-        </div>
-    </div>
-    <div v-else>
-      No comments for this post
-    </div>
-  </template>
+<template>
+  <div class="SocialPostComments">
+    <template v-if="comments.length === 0">
+      <p>There are no comments for this post!</p>
+    </template>
+    <template v-else>
+      <p>Comments:</p>
+      <div v-for="{owner, message} in comments" class="comment">
+        <p>{{ owner.firstName }}: <strong>{{ message }}</strong></p>
+      </div>
+    </template>
+  </div>
+</template>
   
 <script setup >
 import { reactive } from 'vue';
 const props = defineProps({
-  comments: Array, postId: Number
-})
+  postId: String
+});
 
 const comments = reactive([]);
-
-const  fetchComments = (postId) =>{
-  const baseUrl = 'https://dummyjson.com';
-  return fetch(`${baseUrl}/comments/post/${postId}`)
-  .then(response => response.json())
-  .then( result => {
-    Object.assign(comments, result.comments)
+const fetchComments = (postId) => {
+  const baseUrl = "https://dummyapi.io/data/v1";
+  return fetch(`${baseUrl}/post/${postId}/comment?limit=5`,
+  {
+    "headers": {
+      "app-id": "657a3106698992f50c0a5885"
+    }
   })
-}
-
+    .then( response => response.json())
+    .then( result => {
+      Object.assign(comments, result.data);
+    })
+};
 await fetchComments(props.postId);
 </script>
   

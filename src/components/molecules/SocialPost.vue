@@ -6,32 +6,28 @@
     <div class="header">
       <img class="avatar" :src="avatarSrc" />
       <div class="name">{{ username }}</div>
-      <div class="userId">{{ userId }}</div>
       <IconDelete @click="onDeleteClick" />
     </div>
     <div class="post" v-text="post"></div>
     <Suspense v-if="showComments" >
       <SocialPostComments
-        :postId="postId"
+        :post-id="id"
         @delete="onDeleted"
       />
       <template #fallback>
-        Fetching comments..............................
+        fetching comments...
       </template>
     </Suspense>
-
     
     <div class="interactions">
       <IconHeart />
-      {{ interactions }}
-      <IconCommunity />
-      {{ commentsNumber }}
+      {{ likes }}
       <TheButton
-        v-show="hasComments"
         @click="onShowCommentClick"
         value="Show comment"
         width="auto"
         theme="dark"
+        data-cy="showCommentsButton"
       />
     </div>
   </div>
@@ -41,7 +37,6 @@
 import { onMounted, ref, computed } from 'vue';
 import SocialPostComments from './SocialPostComments.vue';
 import IconHeart from '../icons/IconHeart.vue';
-import IconCommunity from '../icons/IconCommunity.vue';
 import IconDelete from '../icons/IconDelete.vue';
 import TheButton from '../atoms/TheButton.vue';
 
@@ -51,11 +46,10 @@ const onShowCommentClick = () => {
   showComments.value = !showComments.value; 
 }
 
-
 const props = defineProps({
   postId: Number,
   username: String,
-  userId: Number,
+  id: Number,
   avatarSrc: String,
   post: String,
  // comments: Array,

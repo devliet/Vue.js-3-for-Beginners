@@ -1,4 +1,14 @@
 <template>
+  <SocialPost
+    v-for="(post, index) in posts"
+    :username="post.owner.firstName"
+    :id="post.id"
+    :avatarSrc="post.image"
+    :post="post.text"
+    :likes="post.likes"
+    :key="post.id"
+    @delete="onDelete(index)"
+  ></SocialPost>
   <!-- substituting retweets -->
   <!-- vue 3 v-for across async fetch data -->
   <p>
@@ -25,8 +35,8 @@
 
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import SocialPost from '../molecules/SocialPost.vue'
+  import { reactive, ref, watch } from 'vue';
+  import SocialPost from '../molecules/SocialPost.vue'
 
 const onDelete = (postIndex) => {
   posts.value.splice(postIndex, 1);

@@ -1,12 +1,11 @@
 <template>
   <div
     class="SocialPost" 
-    :class="{ SocialPost__selected: selected}"
   >
     <div class="header">
       <img class="avatar" :src="avatarSrc" />
       <div class="name">{{ username }}</div>
-      <IconDelete @click="onDeleteClick" />
+      <IconDelete @click="onDeleteClick" role="button" />
     </div>
     <div class="post" v-text="post"></div>
     <Suspense v-if="showComments" >
@@ -24,7 +23,7 @@
       {{ likes }}
       <TheButton
         @click="onShowCommentClick"
-        value="Show comment"
+        
         width="auto"
         theme="dark"
         data-cy="showCommentsButton"
@@ -90,9 +89,6 @@ const onDeleteClick = () => {
 <style lang="scss">
 .SocialPost{
   margin-bottom:16px;
-  &__selected{
-    border: white solid 1px;
-  }
   .header {
     display: flex;
     align-items: center;

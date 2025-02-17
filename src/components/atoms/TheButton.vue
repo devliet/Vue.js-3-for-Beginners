@@ -2,7 +2,7 @@
     <button
         :class="theme"
     >
-     {{  value  }}
+     <slot>Click Me</slot>
     </button>
 </template>
 <script setup>

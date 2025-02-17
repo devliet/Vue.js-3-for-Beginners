@@ -1,42 +1,48 @@
 <template>
     <aside :class="{ 'sidebar__closed': closed}">
         <template v-if="closed">
-            <IconRightIcon @click="toggleSidebar"/>
-        </template><template v-else>
+            <IconRightArrow class="sidebar__icon" @click="toggleSidebar" />
+        </template>
+        <template v-else>
             <h2>Sidebar</h2>
-            <IconLeftIcon class="sidebar__icon" @click="toggleSidebar"/>
+            <IconLeftArrow class="sidebar__icon" @click="toggleSidebar" />
             <TheButton>Create post</TheButton>
             <div>
-                Current time: {{ currentTime }}
+                Current time: {{currentTime}}
             </div>
-            <TheButton @click.once="onUpdateTimeClick" value="Update time" />
+            <TheButton @click="onUpdateTimeClick">Update Time</TheButton>
+            <a @click="navigateToPrivacy">Programmatic to privacy</a>
+            <router-link to="about">About</router-link>
         </template>
-
     </aside>
 </template>
 <script setup>
-import { onBeforeMount, ref } from 'vue';
-import TheButton from '../atoms/TheButton.vue';
-import IconLeftIcon from '../icons/IconLeftArrow.vue'
-import IconRightIcon from '../icons/IconRightArrow.vue'
+import { ref, onBeforeMount } from 'vue';
+import TheButton  from '../atoms/TheButton.vue'
+import IconLeftArrow from '../icons/IconLeftArrow.vue'
+import IconRightArrow from '../icons/IconRightArrow.vue'
+import { RouterLink, useRouter } from 'vue-router';
 
 const currentTime = ref(new Date().toLocaleTimeString());
-const closed= ref(false);
-
-const onUpdateTimeClick = () => {
-    currentTime.value = new Date().toLocaleTimeString();
-};
-
-const toggleSidebar = ()=>{
+const closed = ref(false);
+const toggleSidebar = () => {
     closed.value = !closed.value;
     window.localStorage.setItem("sidebar", closed.value);
 }
+const onUpdateTimeClick = () => {
+    currentTime.value = new Date().toLocaleTimeString();
+};
+const router = useRouter();
 
-onBeforeMount(()=>{
+const navigateToPrivacy = (event) => {
+event.preventDefault();
+console.log("Run a side effect");
+router.push("privacy");
+}
+onBeforeMount( async () => {
     const sidebarState = window.localStorage.getItem("sidebar");
-    closed.value = sidebarState == "true";
-})
-
+    closed.value = sidebarState === "true";
+});
 </script>
 <style scoped>
 aside {

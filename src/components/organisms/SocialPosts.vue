@@ -7,6 +7,7 @@
     :post="post.text"
     :likes="post.likes"
     :key="post.id"
+    :userId="index"
     @delete="onDelete(index)"
   ></SocialPost>
   <!-- substituting retweets -->

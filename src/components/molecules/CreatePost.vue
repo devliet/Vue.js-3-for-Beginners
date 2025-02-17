@@ -1,5 +1,6 @@
 <template>
     <form ref="createPostForm" @submit="createPost">
+    <form ref="createPostForm" @submit="createPost">
         <h2>Create a Post</h2>
         <textarea rows="4" cols="20" ref="textareaRef" required="true" minlength="10"></textarea>
         <TheButton>post</TheButton>

@@ -7,10 +7,6 @@
 </template>
 <script setup>
 defineProps({
-    value: {
-        type: [String, Number],
-        required: true
-    },
     width: {
         type: String,
         default: "100px"

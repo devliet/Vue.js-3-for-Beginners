@@ -7,7 +7,7 @@
       </div>
       <div class="post" v-text="post"></div>
       <Suspense v-if="showComments">
-        <SocialPostComments :postId="props.id" @delete="onDeleted" />
+        <SocialPostComments :postId="props.id" @delete="onDelete" />
         <template #fallback>
           fetching comments...
         </template>
@@ -35,6 +35,10 @@
     console.log("Showing comments");
     showComments.value = !showComments.value;
   }
+
+  const onDelete = () => {
+  emit('delete');
+}
   
   const props = defineProps({
     username: String,

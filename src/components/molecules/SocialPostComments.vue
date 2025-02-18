@@ -5,8 +5,8 @@
     </template>
     <template v-else>
       <p>Comments:</p>
-      <div v-for="{owner, message} in comments" class="comment">
-        <p>{{ owner.firstName }}: <strong>{{ message }}</strong></p>
+      <div v-for="(comment, index) in comments" class="comment">
+        <p>{{ comment.user.username }}: <strong>{{ comment.body }}</strong></p>
       </div>
     </template>
   </div>
@@ -15,21 +15,20 @@
 <script setup >
 import { reactive } from 'vue';
 const props = defineProps({
-  postId: String
+  postId: Number,
 });
 
 const comments = reactive([]);
+
 const fetchComments = (postId) => {
-  const baseUrl = "https://dummyapi.io/data/v1";
-  return fetch(`${baseUrl}/post/${postId}/comment?limit=5`,
-  {
-    "headers": {
-      "app-id": "657a3106698992f50c0a5885"
-    }
-  })
+  const baseUrl = "https://dummyjson.com/comments/";
+  return fetch(`${baseUrl}post/${props.postId}`,
+ )
     .then( response => response.json())
     .then( result => {
-      Object.assign(comments, result.data);
+     
+      Object.assign(comments, result.comments);
+     
     })
 };
 await fetchComments(props.postId);

@@ -9,7 +9,8 @@
 <script setup>
 import { RouterView, useRoute } from 'vue-router'
 const route = useRoute()
-const userId = route.userId
+const userId = route.params.userId
+
 
 </script>
 <style>

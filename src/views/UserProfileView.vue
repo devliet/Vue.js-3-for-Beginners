@@ -23,8 +23,9 @@ const valuesToDisplay = [
 
 ];
 const fetchUser = (userId) => {
-    const url = `https://randomuser.me/api/?seed=${userId}`;
-    fetch(url, {
+    const baseUrl = "https://dummyjson.com/";
+    
+    fetch(`${baseUrl}users/${route.params.userId}`, {
         // "headers": {
         //     "app-id": "657a3106698992f50c0a5885"
         // }
@@ -33,18 +34,15 @@ const fetchUser = (userId) => {
         .then(result => {
          //   Object.assign(user, result);
          
-            user.title= result.results[0].name.title,
-            user.first=result.results[0].name.first,
-            user.last= result.results[0].name.last,
-            user.email= result.results[0].email,
-            user.picture= result.results[0].picture.thumbnail,
+            user.title= result.company.title,
+            user.first=result.firstName,
+            user.last= result.lastName,
+            user.email= result.email,
+            user.picture= result.image,
       //   comments="fields3[index].body,
-            user.gender= result.results[0].gender
-
-
-
+            user.gender= result.gender
         });
 } 
 const route = useRoute();
-fetchUser(route.params.userId);
+fetchUser(route.params.userId + 1);
 </script>

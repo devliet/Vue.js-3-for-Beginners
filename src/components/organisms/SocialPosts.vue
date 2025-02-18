@@ -1,12 +1,12 @@
 <template>
   <SocialPost
     v-for="(post, index) in posts"
-    :username="post.owner.firstName"
-    :id="post.id"
-    :avatarSrc="post.image"
-    :post="post.text"
+    :username="post.username"
+    :postId="post.postId"
+    :avatarSrc="post.avatarSrc"
+    :post="post.post"
     :likes="post.likes"
-    :key="post.id"
+    :key="post.postId"
     :userId="index"
     @delete="onDelete(index)"
   ></SocialPost>
@@ -25,8 +25,8 @@
 
     <!-- :comments="fields3[index].body" -->
 
-    <SocialPost v-for="(post, index) in posts" :post-id="post.id" :username="post.username" :userId="post.userId"
-      :avatarSrc="post.avatarSrc" :post="post.post" :likes="post.likes" :retweets="post.retweets" :key="post.id"
+    <SocialPost v-for="(post, index) in posts" :postId="post.postId" :username="post.username" :userId="post.userId"
+      :avatarSrc="post.avatarSrc" :post="post.post" :likes="post.likes" :retweets="post.retweets" :key="post.postId"
       @delete="onDelete(index)"></SocialPost>
 
   </div>
@@ -36,7 +36,7 @@
 
 
 <script setup>
-  import { reactive, ref, watch } from 'vue';
+  import { reactive, ref, watch, onMounted } from 'vue';
   import SocialPost from '../molecules/SocialPost.vue'
 
 const onDelete = (postIndex) => {
@@ -86,7 +86,8 @@ async function fetchFields(skip, limit) {
   const [fields1Response, fields2Response, fields3Response] = await Promise.all([
     fetch(`https://dummyjson.com/posts?select=userId,body,reactions,views&skip=${skip.value}&limit=${limit.value}`),
     fetch(`https://dummyjson.com/users?select=username,image&skip=${skip.value}&limit=${limit.value}`),
-    fetch(`https://dummyjson.com/comments?skip=${skip.value}&limit=${limit.value}`),
+ //   fetch(`https://dummyjson.com/comments?skip=${skip.value}&limit=${limit.value}`),
+    fetch(`https://dummyjson.com/comments?limit=${limit.value}`),
   ])
 
 
@@ -106,7 +107,7 @@ async function fetchFields(skip, limit) {
   for (let index = 0; index <= limit.value-1; index++) {
     console.log(index)
     posts.value.push({
-       id: fields3.value[index].id,
+      postId: fields3.value[index].postId,
       username: fields2.value[index].username,
       userId: fields1.value[index].userId,
       avatarSrc: fields2.value[index].image,

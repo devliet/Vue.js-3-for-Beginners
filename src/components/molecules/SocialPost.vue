@@ -2,12 +2,12 @@
   <div class="SocialPost">
     <div class="header">
       <img class="avatar" :src="avatarSrc" @click="navigateToUser" />
-      <div class="name">{{ username }}</div>
+      <div class="name">{{ username }} - {{ userId }} - {{ postId }}</div>
       <IconDelete @click="onDeleteClick" role="button" />
     </div>
     <div class="post" v-text="post"></div>
     <Suspense v-if="showComments">
-      <SocialPostComments :post-id="id" @delete="onDeleted" />
+      <SocialPostComments :postId="props.postId" @delete="onDeleteClick" />
       <template #fallback>
         fetching comments...
       </template>
@@ -44,11 +44,11 @@ const onShowCommentClick = () => {
 const props = defineProps({
   postId: Number,
   username: String,
-  id: String,
+ // id: String,
   avatarSrc: String,
   post: String,
   likes: Number,
-  userId: String
+  userId: Number
 });
 
 const router = useRouter();
@@ -56,7 +56,7 @@ const navigateToUser = () => {
   router.push({
     name: "user",
     params: {
-      userId: props.userId
+      userId: props.userId +1
     }
   });
 }

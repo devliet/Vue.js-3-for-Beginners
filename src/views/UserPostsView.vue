@@ -7,7 +7,7 @@
       </div>
       <div class="post" v-text="post"></div>
       <Suspense v-if="showComments">
-        <SocialPostComments :post-id="id" @delete="onDeleted" />
+        <SocialPostComments :postId="props.id" @delete="onDeleted" />
         <template #fallback>
           fetching comments...
         </template>
@@ -44,13 +44,15 @@
     likes: Number,
     userId: String
   });
+
   
   const router = useRouter();
+
   const navigateToUser = () => {
     router.push({
       name: "user",
       params: {
-        userId: props.userId
+        userId: props.userId +1
       }
     });
   }

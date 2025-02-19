@@ -1,5 +1,6 @@
 <template>
     <section class="userView">
+        
         <h2>User information</h2>
         <template v-for="key in valuesToDisplay">
             <label v-if="user[key]">
@@ -13,6 +14,9 @@
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 const user = reactive({});
+const props = defineProps({
+    userId: String
+})
 const valuesToDisplay = [
     "title",
     "first",

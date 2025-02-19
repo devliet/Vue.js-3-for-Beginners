@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
-// import PrivacyView from '../views/PrivacyView.vue'
+import PrivacyView from '../views/PrivacyView.vue'
 import UserProfileView from '../views/UserProfileView.vue'
 import UserPostsView from '../views/UserPostsView.vue'
 import UserView from '../views/UserView.vue'
@@ -29,29 +29,29 @@ const router = createRouter({
       name: 'about',
       component: AboutView
     },
-    // {
-    //   path: '/privacy',
-    //   name: 'privacy',
-    //   component: PrivacyView
-    //   },
-      {
-        path: "/user/:userId",
-        name: "user",
-        component: UserView,
-        children:[
-          {
-            path: "profile",
-            name: "user-profile",
-            component: UserProfileView
-          },
-          {
-            path: "posts",
-            name: "user-posts",
-            component: UserPostsView
-          }
-        ]
-        
+    {
+      path: "/user/:userId",
+      name: "user",
+      redirect: { name: "user-profile"},
+    //  component: UserView,
+      children: [
+        {
+          path: "profile",
+          name: "user-profile",
+          component: UserProfileView
+        },
+        {
+          path: "posts",
+          name: "user-posts",
+          component: UserPostsView
         }
+      ]},
+    {
+      path: '/privacy',
+      name: 'privacy',
+      alias: '/privacy-policy',
+      component: PrivacyView
+    },
   ]
 })
 

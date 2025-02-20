@@ -9,11 +9,14 @@
 import { onMounted, ref} from 'vue';
 import TheButton from '../atoms/TheButton.vue';
 import { usePostsStore} from '../../stores/posts';
+import { useVisibilityStore } from '../../stores/visibility';
 
 const textareaRef = ref(null);
 const createPostForm = ref(null);
 
 const postsStore = usePostsStore()
+const visibilityStore = useVisibilityStore()
+
 const { addPost} =  postsStore
 
 const createPost = (event) =>{
@@ -27,6 +30,8 @@ const createPostHandler = (event) => {
     event.preventDefault();
     if(createPostForm.value.reportValidity()){
         addPost(textareaRef.value.value)
+        visibilityStore.toggleForm();
+
     }
 }
 

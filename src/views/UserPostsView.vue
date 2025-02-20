@@ -21,7 +21,7 @@ const fetchPosts = (userId) => {
       for (let index = 0; index <result.posts.length; index++) {
         console.log(index)
         posts.push({
-          postId: result.posts[index].id,
+          postId: result.posts[index].id.toString(),
           username: "Not specified",
           userId: "Not specified",
           avatarSrc: "Not specified",

@@ -42,7 +42,7 @@ const onShowCommentClick = () => {
 }
 
 const props = defineProps({
-  postId: Number,
+  postId: String,
   username: String,
  // id: String,
   avatarSrc: String,

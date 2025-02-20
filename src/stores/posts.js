@@ -27,7 +27,7 @@ export const usePostsStore = defineStore('posts',
 
                 for (let index = 0; index <= limit.value - 1; index++) {
                     this.posts.push({
-                        postId: fields3.value[index].postId,
+                        postId: fields3.value[index].postId.toString(),
                         username: fields2.value[index].username,
                         userId: fields1.value[index].userId,
                         avatarSrc: fields2.value[index].image,
@@ -62,7 +62,7 @@ export const usePostsStore = defineStore('posts',
             return {
             postId: "60d0fe4f5311236168a100cs",
             username: "Anon",
-            userId: "-1",
+            userId: -1,
             avatarSrc:  "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=40",
             post: "Any text",
             likes: 0,

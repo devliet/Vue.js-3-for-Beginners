@@ -11,7 +11,7 @@ import TheHeader from '../components/organisms/TheHeader.vue';
   <SideBar />
   <main>
     <!-- <Http /> -->
-    <CreatePost />
+    <!-- <CreatePost /> -->
     <SocialPosts />
   </main>
 </template>

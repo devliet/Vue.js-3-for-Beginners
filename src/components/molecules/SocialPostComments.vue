@@ -15,7 +15,7 @@
 <script setup >
 import { reactive } from 'vue';
 const props = defineProps({
-  postId: Number,
+  postId: String,
 });
 
 const comments = reactive([]);

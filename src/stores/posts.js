@@ -47,8 +47,27 @@ export const usePostsStore = defineStore('posts',
             ,
             removePosts(postIndex) {
                 this.posts.splice(postIndex, 1);
+            },
+            addPost(postText){
+                const post = generatePostStructure(postText);
+                this.posts.unshift(post);
             }
 
-        }
+        },
+
+    
     }
-)
+) 
+   const generatePostStructure = (postText)=> {
+            return {
+            postId: "60d0fe4f5311236168a100cs",
+            username: "Anon",
+            userId: "-1",
+            avatarSrc:  "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=40",
+            post: "Any text",
+            likes: 0,
+            retweets: "0",
+            tags: []
+
+            }
+        }

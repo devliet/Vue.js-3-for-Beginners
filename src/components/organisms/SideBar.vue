@@ -23,15 +23,19 @@ import IconLeftArrow from '../icons/IconLeftArrow.vue'
 import IconRightArrow from '../icons/IconRightArrow.vue'
 import { RouterLink, useRouter } from 'vue-router';
 import { useSidebarStore } from '../../stores/sidebar';
+import { usePostsStore} from '../../stores/posts';
 
 const currentTime = ref(new Date().toLocaleTimeString());
+const texareaRef = ref(null)
 //const closed = ref(false);
 const sidebarStore = useSidebarStore()
+
 
 // const toggleSidebar = () => {
 //     closed.value = !closed.value;
 //     window.localStorage.setItem("sidebar", closed.value);
 // }
+
 const onUpdateTimeClick = () => {
     currentTime.value = new Date().toLocaleTimeString();
 };

@@ -1,15 +1,20 @@
 <template>
     <form ref="createPostForm" @submit="createPost">
         <h2>Create a Post</h2>
-        <textarea rows="4" cols="20" ref="textareaRef" required="true" minlength="10"></textarea>
-        <TheButton>post</TheButton>
+        <textarea rows="4" cols="20" ref="textareaRef" required="true" minlength="10">Value to add</textarea>
+        <TheButton @click="createPostHandler">Create a post</TheButton>
     </form>
 </template>
 <script setup>
 import { onMounted, ref} from 'vue';
 import TheButton from '../atoms/TheButton.vue';
+import { usePostsStore} from '../../stores/posts';
+
 const textareaRef = ref(null);
 const createPostForm = ref(null);
+
+const postsStore = usePostsStore()
+const { addPost} =  postsStore
 
 const createPost = (event) =>{
     event.preventDefault();
@@ -17,6 +22,14 @@ const createPost = (event) =>{
 
     }
 }
+
+const createPostHandler = (event) => {
+    event.preventDefault();
+    if(createPostForm.value.reportValidity()){
+        addPost(textareaRef.value.value)
+    }
+}
+
 onMounted(()=> {
     textareaRef.value.focus();
 })

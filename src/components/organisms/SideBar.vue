@@ -17,6 +17,7 @@
                 Current time: {{ currentTime }}
             </div>
             <TheButton @click="onUpdateTimeClick">Update Time</TheButton>
+            <router-link to="contact">Contact</router-link>
             <a @click="navigateToPrivacy">Programmatic to privacy</a>
             <router-link to="about">About</router-link>
         </template>

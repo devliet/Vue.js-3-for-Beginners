@@ -5,6 +5,7 @@ import PrivacyView from '../views/PrivacyView.vue'
 import UserProfileView from '../views/UserProfileView.vue'
 import UserPostsView from '../views/UserPostsView.vue'
 import UserView from '../views/UserView.vue'
+import ContactUs from '../components/organisms/ContactUs.vue'
 
 
 
@@ -51,6 +52,12 @@ const router = createRouter({
       name: 'privacy',
       alias: '/privacy-policy',
       component: PrivacyView
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      alias: '/contact',
+      component: ContactUs
     },
   ]
 })

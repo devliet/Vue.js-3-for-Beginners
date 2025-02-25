@@ -64,7 +64,7 @@ export const usePostsStore = defineStore('posts',
             username: "Anon",
             userId: -1,
             avatarSrc:  "https://dummyjson.com/icon/michaelw/128",
-            post: "Any text",
+            post: postText,
             likes: 0,
             retweets: "0",
             tags: []
